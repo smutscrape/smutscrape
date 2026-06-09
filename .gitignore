@@ -27,4 +27,4 @@ wget-log
 .idea/
 .vscode/
 
-*.mp4*
+*.mp4*chrome*/

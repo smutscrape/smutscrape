@@ -24,7 +24,7 @@ modes:
   search:
     scraper: list_scraper
     url_pattern: "/search/{search}"
-    url_pattern_pages: "/search/{search}/{page - 1}" # setback needed
+    url_pattern_pages: "/search/{search}/{page_minus_1}" # setback needed
     url_encoding_rules:
       " ": "+"
       "%20": "+"
@@ -46,7 +46,7 @@ modes:
   tag:
     scraper: list_scraper
     url_pattern: "/search/{tag}"
-    url_pattern_pages: "/search/{tag}/{page - 1}" # setback needed
+    url_pattern_pages: "/search/{tag}/{page_minus_1}" # setback needed
     url_encoding_rules:
       " ": "+"
       "%20": "+"
