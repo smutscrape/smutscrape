@@ -16,7 +16,7 @@ A Python-based tool to scrape and download adult content from various websites s
 - Recommended: [Conda](https://github.com/conda/conda) or [Mamba](https://github.com/mamba-org/mamba) for environment management 🐼
 - For JavaScript-heavy sites: [Selenium](https://pypi.org/project/selenium/) + [Chromedriver](https://chromedriver.chromium.org/) for JS-heavy sites, and [webdriver-manager](https://pypi.org/project/webdriver-manager/) for foolproof ChromeDriver management.
 - [ffmpeg](https://ffmpeg.org/) for downloading from certain sites that use HLS and aren't supported by [yt-dlp](https://github.com/yt-dlp/yt-dlp).
-- Dozen or so Python libraries in [requirements.txt](https://github.com/smutscrape/smutscrape/blob/main/requirements.txt).
+- Dozen or so Python libraries in [requirements.txt](https://codeberg.org/smutscrape/smutscrape/blob/main/requirements.txt).
 
 All Python dependencies are in `requirements.txt`.
 
@@ -27,7 +27,7 @@ All Python dependencies are in `requirements.txt`.
 1. **Clone the Repo 📂**
 
    ```bash
-   git clone https://github.com/smutscrape/smutscrape.git
+   git clone https://codeberg.org/smutscrape/smutscrape.git
    cd smutscrape
    ```
 
@@ -89,7 +89,7 @@ All Python dependencies are in `requirements.txt`.
 
 Run `python scrape.py` (or `scrape` if symlinked) to download adult content and save metadata in `.nfo` files. With no arguments, you'll get a detailed, aesthetic readout of all supported site modes on your system, dynamically generated from `./sites/` configurations (see left image below). Alternatively, running `scrape {code}` (e.g., `scrape ml`) provides detailed info about that site—curated notes, tips, caveats, available metadata, special requirements, and usage examples (see right image below).
 
-<div style="display: flex; justify-content: center; align-items: center; gap: 20px; padding: 10px;"><a href="https://github.com/smutscrape/smutscrape/raw/main/screenshots/screenshot1.jpg"><img src="https://github.com/smutscrape/smutscrape/raw/main/screenshots/screenshot1.jpg?raw=true" alt="No Arguments Screenshot" width="300" style="border: 2px solid #ff69b4; border-radius: 5px;"></a> <a href="https://github.com/smutscrape/smutscrape/raw/main/screenshots/screenshot2.jpg?"><img src="https://github.com/smutscrape/smutscrape/raw/main/screenshots/screenshot2.jpg?raw=true" alt="Site Identifier Screenshot" width="300" style="border: 2px solid #ff69b4; border-radius: 5px;"></a></div>
+<div style="display: flex; justify-content: center; align-items: center; gap: 20px; padding: 10px;"><a href="https://codeberg.org/smutscrape/smutscrape/raw/main/screenshots/screenshot1.jpg"><img src="https://github.com/smutscrape/smutscrape/raw/main/screenshots/screenshot1.jpg?raw=true" alt="No Arguments Screenshot" width="300" style="border: 2px solid #ff69b4; border-radius: 5px;"></a> <a href="https://github.com/smutscrape/smutscrape/raw/main/screenshots/screenshot2.jpg?"><img src="https://github.com/smutscrape/smutscrape/raw/main/screenshots/screenshot2.jpg?raw=true" alt="Site Identifier Screenshot" width="300" style="border: 2px solid #ff69b4; border-radius: 5px;"></a></div>
 
 ---
 
