@@ -1,0 +1,66 @@
+# sites/incestlover.yaml
+name: IncestLover
+shortcode: il
+domain: incestlover.com
+base_url: "https://incestlover.com"
+selector_style: css
+no_overwrite: true
+# use_selenium: true
+# unique_name: true
+
+url_encoding_rules:
+  " ": "-"
+  "%20": "-"
+note: "IncestLover follows the same barebones template as its sister sites. Minimal design, maximum content. Another member of the 'function over form' family of sites. Expect the usual mix of amateur uploads and recycled content, but hey, at least it loads fast. The name leaves nothing to the imagination."
+
+modes:
+  video:
+    url_pattern: "/{any}-{video}.html"
+    scraper: video_scraper
+    tip: ""
+    examples:
+      - "some-video-slug"
+  all:
+    url_pattern: "/"
+    url_pattern_pages: "/{page}/"
+    scraper: list_scraper
+    max_pages: 999
+    tip: "Download videos starting from a page number (1 is root)"
+    examples:
+      - "1"
+      - "5"
+
+download:
+  method: "yt-dlp"
+
+scrapers:
+  list_scraper:
+    video_container:
+      selector:
+        - "div.thumbs"
+    video_item:
+      selector: "a"
+      fields:
+        url:
+          attribute: "href"
+
+  video_scraper:
+    title:
+      selector: "head title"
+      postProcess:
+        - replace:  # Clean up " - IncestLover" from title if present
+            - regex: "\\s*-\\s*IncestLover\\s*"
+              with: ""
+      default: "Video {random.randint(10000, 99999)}"  # Matches script fallback
+    # download_url:
+      # selector: "div.playerArea video"
+      # attribute: "src"
+#      postProcess:
+#        - replace:  # Handle relative URLs (if any)
+#            - regex: "^(?!https?:)"
+#              with: "https://incestlover.com/"
+#        - replace:  # Direct swap per your working script
+#            - regex: "https://media\\.incestlover\\.com/"
+#              with: "https://v1.rfsstaic.com/incestlover.com/"
+
+name_suffix: " - IncestLover"  # Matches script's title formatting

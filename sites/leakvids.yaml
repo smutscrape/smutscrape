@@ -89,4 +89,4 @@ scrapers:
     pagination:
       next_page:
         selector: "li.next a"
-        attribute: "href"
+        attribute: "data-parameters"
