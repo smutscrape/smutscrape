@@ -18,9 +18,12 @@ class StashClient:
         if variables:
             payload["variables"] = variables
         resp = self.session.post(self.url, json=payload, timeout=30)
+        if not resp.ok:
+            logger.error(f"Stash HTTP {resp.status_code}: {resp.text[:500]}")
         resp.raise_for_status()
         data = resp.json()
         if "errors" in data:
+            logger.error(f"Stash GraphQL errors: {data['errors']}")
             raise RuntimeError(f"GraphQL errors: {data['errors']}")
         return data.get("data", {})
 
