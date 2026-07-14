@@ -1020,4 +1020,51 @@ def process_video_page(url, site_config, general_config, overwrite=False, header
     if driver:
         driver.quit()
     time.sleep(general_config['sleep']['between_videos'])
-    return success or state_updated 
+    return success or state_updated
+  
+def _ingest_to_stash(client, file_path, metadata, config):
+    stash_config = config.get("stash", {})
+    scan_paths = stash_config.get("scan_paths", [])
+
+    # 1. Trigger scan of the relevant directory
+    for sp in scan_paths:
+        client.metadata_scan([sp])
+
+    # 2. Map host path → Stash-visible path
+    stash_path = _map_to_stash_path(file_path, stash_config)
+
+    # 3. Poll until scene appears (with timeout)
+    scene_id = None
+    for _ in range(30):  # ~30 seconds
+        scene_id = client.find_scene_by_path(stash_path)
+        if scene_id:
+            break
+        time.sleep(1)
+
+    if not scene_id:
+        logger.warning(f"Stash: scene not found for {stash_path} after scan")
+        return
+
+    # 4. Push metadata
+    client.update_scene(scene_id,
+        title=metadata.get("title"),
+        details=metadata.get("description"),
+        date=metadata.get("date"),
+        url=metadata.get("url"),
+        cover_image=metadata.get("image"),
+    )
+
+    # 5. Apply tags/performers/studios (creates missing ones in Stash)
+    if metadata.get("tags"):
+        client.apply_tags(scene_id, metadata["tags"])
+    if metadata.get("actors"):
+        client.apply_performers(scene_id, metadata["actors"])
+    if metadata.get("studios"):
+        client.apply_studios(scene_id, metadata["studios"])
+
+    # 6. Generate covers/previews
+    if stash_config.get("generate_after_ingest", True):
+        client.generate([scene_id])
+
+    logger.success(f"Stash: ingested scene {scene_id} — {metadata.get('title')}")
+  
