@@ -116,6 +116,7 @@ Refer to this table of supported sites with available modes and metadata, or see
 | `fsx`  | **_ForcedSex_**               | video · all ✦                  | None                           |
 | `if`   | **_IncestFlix_**              | video · tag ✦‡                 | actors · studios · tags        |
 | `ig`   | **_IncestGuru_**              | video · tag ✦                  | actors · studios · tags        |
+| `il`   | **_IncestLover_**             | video · all ✦                  | None                           |
 | `lf`   | **_LoneFun_**                 | video · search ✦               | description · tags             |
 | `lux`  | **_Luxure_**                  | video · search ✦ · channel     | description · tags             |
 | `lv`   | **_LeakVids_** †              | video · search · tag · category | actors · description · studios · tags |
@@ -123,6 +124,7 @@ Refer to this table of supported sites with available modes and metadata, or see
 | `msip` | **_MomSonIncestPorn_**        | video · all ✦                  | None                           |
 | `ph`   | **_PornHub_** †               | video · model ✦ · category ✦ · tag ✦ · studio ✦ · search ✦ · pornstar ✦ | actors · code · date · studios · tags |
 | `rip`  | **_RapeIncestPornXXXSex_**    | video · all ✦                  | None                           |
+| `rl`   | **_RapeLust_**                | video · search ✦ · tag ✦ · star ✦ | actors · code · date · description · tags |
 | `sb`   | **_SpankBang_**               | video · model ✦ · search ✦ · tag ✦ | actors · description · tags    |
 | `tna`  | **_TNAflix_**                 | video · search ✦               | actors · date · description · studios · tags |
 | `tr`   | **_TopRealIncestVideos_**     | video · search                 | None                           |
