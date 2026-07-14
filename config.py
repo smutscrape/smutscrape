@@ -205,6 +205,19 @@ class ConfigManager:
             finally:
                 self._selenium_driver = None
                 self._selenium_user_agent = None
+
+    @property
+    def stash_client(self) -> StashClient | None:
+        """Get the Stash client (for optional Stash integration)."""
+        stash_config = self.general_config.get("stash", {})
+        if not stash_config.get("enabled"):
+            return None
+        if self._stash_client is None:
+            self._stash_client = StashClient(
+                url=stash_config["url"],
+                api_key=stash_config.get("api_key", "")
+            )
+        return self._stash_client
     
     def cleanup(self):
         """Clean up all resources."""
