@@ -24,6 +24,16 @@ download_destinations:
   - type:              local
     path:              "~/.xxx"                     # Local folder to save videos (e.g., /home/user/.xxx)
 
+
+# Stash integration (optional — pushes metadata directly after download)
+stash:
+  enabled: false
+  url: "http://localhost:9999"        # Stash GraphQL endpoint
+  api_key: ""                         # Settings → Security → API key
+  scan_paths:                         # Paths AS STASH SEES THEM
+    - "/storage/xxx"                  #   (may differ from host paths if Docker)
+  generate_after_ingest: true         # Auto-generate covers/previews/sprites
+
 # --------------------------------------------------------------------------------
 
 # Terms to skip during scraping (case-insensitive, applied to all metadata fields).
