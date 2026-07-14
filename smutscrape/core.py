@@ -1021,7 +1021,15 @@ def process_video_page(url, site_config, general_config, overwrite=False, header
         driver.quit()
     time.sleep(general_config['sleep']['between_videos'])
     return success or state_updated
-  
+
+def _map_to_stash_path(host_path: str, stash_config: dict) -> str:
+    """Map a host filesystem path to the path Stash sees (for Docker bind mounts)."""
+    path_map = stash_config.get("path_map", {})
+    for host_prefix, stash_prefix in path_map.items():
+        if host_path.startswith(host_prefix):
+            return host_path.replace(host_prefix, stash_prefix, 1)
+    return host_path  # no mapping configured, assume same path
+
 def _ingest_to_stash(client, file_path, metadata, config):
     stash_config = config.get("stash", {})
     scan_paths = stash_config.get("scan_paths", [])
