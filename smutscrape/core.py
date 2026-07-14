@@ -1010,7 +1010,14 @@ def process_video_page(url, site_config, general_config, overwrite=False, header
     # After successful download + NFO + file move:
     stash = get_config_manager().stash_client
     if stash and final_metadata:
-        _ingest_to_stash(stash, final_destination_path, final_metadata, general_config)
+        # For SMB, the file lives on the remote share; construct the path
+        # Stash sees by joining scan_paths[0] with the filename.
+        if destination_config['type'] == 'smb':
+            smb_path = os.path.join(destination_config['path'], file_name)
+        else:
+            smb_path = final_destination_path
+        _ingest_to_stash(stash, smb_path, final_metadata, general_config)
+      
   
     if success and not is_url_processed(original_url, state_set):
         logger.debug(f"Adding {original_url} to state")
@@ -1030,6 +1037,7 @@ def _map_to_stash_path(host_path: str, stash_config: dict) -> str:
             return host_path.replace(host_prefix, stash_prefix, 1)
     return host_path  # no mapping configured, assume same path
 
+
 def _ingest_to_stash(client, file_path, metadata, config):
     stash_config = config.get("stash", {})
     scan_paths = stash_config.get("scan_paths", [])
@@ -1038,12 +1046,16 @@ def _ingest_to_stash(client, file_path, metadata, config):
     for sp in scan_paths:
         client.metadata_scan([sp])
 
-    # 2. Map host path → Stash-visible path
-    stash_path = _map_to_stash_path(file_path, stash_config)
+    # 2. Construct the Stash-visible path: scan_path + basename
+    file_name = os.path.basename(file_path)
+    if scan_paths:
+        stash_path = os.path.join(scan_paths[0].rstrip("/"), file_name)
+    else:
+        stash_path = _map_to_stash_path(file_path, stash_config)
 
     # 3. Poll until scene appears (with timeout)
     scene_id = None
-    for _ in range(30):  # ~30 seconds
+    for _ in range(30):
         scene_id = client.find_scene_by_path(stash_path)
         if scene_id:
             break
