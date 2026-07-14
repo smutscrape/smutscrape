@@ -11,6 +11,7 @@ import yaml
 from typing import Dict, Any, Optional
 from loguru import logger
 
+from smutscrape.stash import StashClient
 from smutscrape.sites import SiteManager, SiteConfiguration
 from smutscrape.downloaders import DownloadManager
 
