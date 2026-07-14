@@ -1,0 +1,109 @@
+# sites/rapelust.yaml
+
+name: RapeLust
+shortcode: rl
+domain: rapelust.com
+base_url: "https://rapelust.com"
+selector_style: css
+no_overwrite: true
+use_selenium: false
+download:
+  method: "requests"
+url_encoding_rules:
+  " ": "-"
+  "%20": "-"
+note: "RapeLust hosts forced/CNC and movie rape scene content, including a substantial collection of PKF Studios and similar necro/snuff fantasy productions. WordPress-based with Flowplayer; video URLs are served from a separate CDN domain (rl.eros.icu) and require a Referer header from rapelust.com. Metadata is rich and well-structured via Yoast schema and standard WordPress tag/star markup."
+
+modes:
+  video:
+    url_pattern: "/video/{video}/"
+    scraper: video_scraper
+    tip: "Download video with identifier"
+    examples:
+      - "it-started-well-but-ended-bad"
+      - "school-girl-snuff-tape"
+      - "petite-teen-gang-raped-and-snuffed"
+  search:
+    url_pattern: "/search/{search}/"
+    url_pattern_pages: "/search/{search}/page/{page}/"
+    max_pages: 999
+    scraper: list_scraper
+    url_encoding_rules:
+      " ": "+"
+      "%20": "+"
+    tip: "Download videos from search results"
+    examples:
+      - "brother sister"
+      - "forced"
+      - "gang rape"
+      - "pkf"
+  tag:
+    url_pattern: "/tag/{tag}/"
+    url_pattern_pages: "/tag/{tag}/page/{page}/"
+    max_pages: 999
+    scraper: list_scraper
+    tip: "Download videos with tag"
+    examples:
+      - "forced"
+      - "snuff"
+      - "gang-rape"
+      - "pkf"
+      - "sexual-abuse"
+  star:
+    url_pattern: "/star/{star}/"
+    url_pattern_pages: "/star/{star}/page/{page}/"
+    max_pages: 999
+    scraper: list_scraper
+    tip: "Download videos featuring a star/actor"
+    examples:
+      - "natalie-knight"
+      - "sissy-toumasi"
+
+scrapers:
+  video_scraper:
+    title:
+      selector: ".videoWrap h2"
+    download_url:
+      selector: ".flowplayer"
+      attribute: "data-item"
+      postProcess:
+        - replace:
+            - regex: '.*"src":"([^"]+)".*'
+              with: "\\1"
+        - replace:
+            - regex: '\\/'
+              with: "/"
+    description:
+      selector: "p.description"
+    tags:
+      selector: ".videoTags a[href*='/tag/']"
+    actors:
+      selector: ".videoTags a[href*='/star/']"
+    image:
+      selector: "meta[property='og:image']"
+      attribute: "content"
+    date:
+      selector: "meta[property='article:published_time']"
+      attribute: "content"
+    code:
+      selector: "article"
+      attribute: "id"
+      postProcess:
+        - replace:
+            - regex: "post-"
+              with: ""
+
+  list_scraper:
+    video_container:
+      selector:
+        - "section#content"
+        - "#wrap"
+    video_item:
+      selector: ".videoPost"
+      fields:
+        url:
+          selector: "a.videoLink"
+          attribute: "href"
+        title:
+          selector: "a.videoLink"
+          attribute: "title"
