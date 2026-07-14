@@ -37,6 +37,8 @@ class ConfigManager:
         # Selenium driver management (moved out of general_config dict)
         self._selenium_driver = None
         self._selenium_user_agent = None
+
+        self._stash_client = None
         
     @property
     def general_config(self) -> Dict[str, Any]:
