@@ -85,24 +85,31 @@ class StashClient:
             logger.warning(f"Stash: sceneUpdate failed for {scene_id}: {e}")
             return False
 
+
+
     def _find_or_create_ids(self, query_name: str, create_mutation: str,
                             names: list[str], input_key: str) -> list[str]:
         """Generic find-or-create for tags/performers/studios."""
+        # Stash uses different field names in the result type than the query name
+        result_field = {
+            "findTags": "tags",
+            "findPerformers": "performers",
+            "findStudios": "studios",
+        }.get(query_name, query_name)
+    
         ids = []
         for name in names:
-            # Find
             result = self._query(f"""
                 query($filter: FindFilterType!) {{
                     {query_name}(filter: $filter) {{
-                        {query_name} {{ id name }}
+                        {result_field} {{ id name }}
                     }}
                 }}
             """, {"filter": {"q": name, "per_page": 1}})
-            items = result.get(query_name, {}).get(query_name, [])
+            items = result.get(query_name, {}).get(result_field, [])
             if items:
                 ids.append(items[0]["id"])
             else:
-                # Create
                 result = self._query(f"""
                     mutation($input: {create_mutation}!) {{
                         {create_mutation}(input: $input) {{ id }}
