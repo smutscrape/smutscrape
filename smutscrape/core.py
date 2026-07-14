@@ -1039,6 +1039,14 @@ def _map_to_stash_path(host_path: str, stash_config: dict) -> str:
 
 
 def _ingest_to_stash(client, file_path, metadata, config):
+    """Push metadata to Stash after download. Non-fatal on failure."""
+    try:
+        _ingest_to_stash_impl(client, file_path, metadata, config)
+    except Exception as e:
+        logger.warning(f"Stash ingestion failed (non-fatal): {e}")
+
+
+def _ingest_to_stash_impl(client, file_path, metadata, config):
     stash_config = config.get("stash", {})
     scan_paths = stash_config.get("scan_paths", [])
 
