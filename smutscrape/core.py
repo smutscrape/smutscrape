@@ -1006,7 +1006,12 @@ def process_video_page(url, site_config, general_config, overwrite=False, header
     if success and destination_config['type'] == 'smb':
         logger.debug(f"Successful video download, now managing file.")
         get_storage_manager().manage_file(final_destination_path, destination_config, overwrite, video_url=original_url, state_set=state_set)
-    
+
+    # After successful download + NFO + file move:
+    stash = get_config_manager().stash_client
+    if stash and final_metadata:
+        _ingest_to_stash(stash, final_destination_path, final_metadata, general_config)
+  
     if success and not is_url_processed(original_url, state_set):
         logger.debug(f"Adding {original_url} to state")
         state_set.add(original_url)
