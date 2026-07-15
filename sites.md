@@ -3,6 +3,7 @@
 | `11v`  | **_11Vids_** †                | video · search · tag ✦ · category | actors · categories · description · studios · tags |
 | `9v`   | **_9Vids_** †                 | video · search · tag           | description · tags             |
 | `bsip` | **_BrotherSisterIncestPorn_** | video · all ✦                  | None                           |
+| `ep`   | **_Eporner_**                 | video · pornstar ✦ · search ✦ · tag ✦ · channel ✦ | actors · studios · tags        |
 | `fdpis` | **_FatherDaughterPornIncestSex_** | video · all ✦                  | None                           |
 | `fphd` | **_FamilyPornHD_** †          | video · tag ✦ · model ✦ · search ✦ · studio ✦ · rss | actors · description · studios · tags |
 | `fptv` | **_FamilyPorn_** †            | video · model · tag · search · studio | actors · description · studios · tags |
@@ -30,7 +31,7 @@
 | `xr`   | **_Xrares_**                  | video · search ✦               | description · tags             |
 | `xv`   | **_XVideos_** †               | video · search ✦ · studio ✦ · model ✦ · tag ✦ · playlist · profile | actors · studios · tags        |
 
-✦ _Supports pagination; see optional arguments below._
+✦ _Supports pagination._
 
 † _Selenium required._
 
