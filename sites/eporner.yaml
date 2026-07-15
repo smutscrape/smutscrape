@@ -1,0 +1,98 @@
+# sites/eporner.yaml
+
+name: Eporner
+shortcode: ep
+domain: eporner.com
+base_url: "https://www.eporner.com"
+selector_style: css
+no_overwrite: true
+use_selenium: false
+download:
+  method: "yt-dlp"
+url_encoding_rules:
+  " ": "-"
+  "%20": "-"
+note: "Eporner is a massive, well-organized mainstream tube with high-quality sources (up to 4K/60fps) and rich, cleanly-structured metadata. yt-dlp handles downloads without fuss. Search and tag modes are functionally identical—Eporner routes both through the same /tag/ endpoint, so either mode works for either purpose. Pagination is a simple numeric suffix (/2/, /3/, etc.)."
+
+modes:
+  video:
+    url_pattern: "/video-{video}/"
+    scraper: video_scraper
+    tip: "Download video with identifier"
+    examples:
+      - "MarN9ACjtE5/anya-olsen-sister-made-to-suck-fuck-step-brother-by-mommy"
+      - "iwVyr968Obo/first-anal-36"
+  pornstar:
+    url_pattern: "/pornstar/{pornstar}/"
+    url_pattern_pages: "/pornstar/{pornstar}/{page}/"
+    max_pages: 999
+    scraper: list_scraper
+    tip: "Download videos featuring pornstar"
+    examples:
+      - "Anya Olsen"
+      - "Cherie DeVille"
+      - "Riley Reyes"
+  search:
+    url_pattern: "/tag/{search}/"
+    url_pattern_pages: "/tag/{search}/{page}/"
+    max_pages: 999
+    scraper: list_scraper
+    tip: "Download videos from search results"
+    examples:
+      - "brother sister"
+      - "step mom fuck"
+      - "creampie"
+  tag:
+    url_pattern: "/tag/{tag}/"
+    url_pattern_pages: "/tag/{tag}/{page}/"
+    max_pages: 999
+    scraper: list_scraper
+    tip: "Download videos with tag"
+    examples:
+      - "brother sister"
+      - "small tits"
+      - "homemade"
+  channel:
+    url_pattern: "/channel/{channel}/"
+    url_pattern_pages: "/channel/{channel}/{page}/"
+    max_pages: 999
+    scraper: list_scraper
+    tip: "Download videos from studio/channel"
+    examples:
+      - "mylf"
+      - "nookies"
+
+scrapers:
+  video_scraper:
+    title:
+      selector: "head title"
+      postProcess:
+        - replace:
+            - regex: "\\s*-\\s*EPORNER\\s*$"
+              with: ""
+    download_url:
+      selector: "meta[property='og:video']"
+      attribute: "content"
+    actors:
+      selector: "div.video-info-tags li.vit-pornstar a"
+    tags:
+      selector: "div.video-info-tags li.vit-category a, div.video-info-tags li.vit-tag a"
+    studios:
+      selector: "div.video-info-tags li.vit-uploader a"
+    image:
+      selector: "meta[property='og:image']"
+      attribute: "content"
+
+  list_scraper:
+    video_container:
+      selector:
+        - "div#vidresults"
+        - "div#vidresultstop"
+    video_item:
+      selector: "div.mb"
+      fields:
+        url:
+          selector: "p.mbtit a"
+          attribute: "href"
+        title:
+          selector: "p.mbtit a"
