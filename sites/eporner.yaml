@@ -16,7 +16,7 @@ note: "Eporner is a massive, well-organized mainstream tube with high-quality so
 
 modes:
   video:
-    url_pattern: "/video-{video}/"
+    url_pattern: "/video-{video}/{any}/"
     scraper: video_scraper
     tip: "Download video with identifier"
     examples:
